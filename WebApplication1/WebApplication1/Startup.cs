@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,7 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews();
             services.AddRazorPages();
         }
 
@@ -39,18 +41,79 @@ namespace WebApplication1
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            
+            //app.Use(async (context, next) =>
+            //{
+            //    await context.Response.WriteAsync("Hello from 1 middleware");
+            //    await context.Response.WriteAsync(Environment.NewLine);
+            //    await next();
+            //    await context.Response.WriteAsync("Hello from 3 middleware");
+            //});
+            //app.Use(async (context, next) =>
+            //{
+            //    await context.Response.WriteAsync("Hello from 2 middleware");
+            //    await context.Response.WriteAsync(Environment.NewLine);
+            //    await next();
+            //});
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapRazorPages();
+            app.UseEndpoints(endpoints => {
+                endpoints.MapDefaultControllerRoute();
             });
+
+            //app.UseEndpoints(Endpoint =>
+            //{
+            //    Endpoint.MapGet("/", async context =>
+            //    {
+            //        await context.Response.WriteAsync("hello world");
+            //    });
+            //});
+            //app.UseEndpoints(Endpoint =>
+            //{
+            //    Endpoint.MapGet("/karan", async context =>
+            //    {
+            //        await context.Response.WriteAsync("hello karan world");
+            //    });
+            //});
+
+            //app.UseEndpoints(Endpoint =>
+            //{
+            //    Endpoint.Map("/", async context =>
+            //    {
+            //        await context.Response.WriteAsync("ApplicationName " + env.ApplicationName);
+            //        await context.Response.WriteAsync(Environment.NewLine);
+            //        await context.Response.WriteAsync("ApplicationName " + env.ApplicationName);
+            //        await context.Response.WriteAsync(Environment.NewLine);
+            //        await context.Response.WriteAsync("ContentRootFileProvider " + env.ContentRootFileProvider);
+            //        await context.Response.WriteAsync(Environment.NewLine);
+            //        await context.Response.WriteAsync("EnvironmentName " + env.EnvironmentName);
+            //        await context.Response.WriteAsync(Environment.NewLine);
+            //        await context.Response.WriteAsync("WebRootFileProvider " + env.WebRootFileProvider);
+            //        await context.Response.WriteAsync(Environment.NewLine);
+            //        await context.Response.WriteAsync("WebRootPath " + env.WebRootPath);
+            //        await context.Response.WriteAsync(Environment.NewLine);
+            //    });
+            //});
+            //app.UseEndpoints(Endpoint =>
+            //{
+            //    Endpoint.Map("/karan", async context =>
+            //    {
+            //        await context.Response.WriteAsync("hello karan world");
+            //    });
+            //});
+
+            //app.UseHttpsRedirection();
+            //app.UseStaticFiles();
+
+            //app.UseRouting();
+
+            //app.UseAuthorization();
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapRazorPages();
+            //});
         }
     }
 }
